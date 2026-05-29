@@ -15,13 +15,13 @@ NEGRITO="\033[1m"
 RESET="\033[0m"
 
 # Links dos scripts (substitua com os links raw do GitHub)
-VM_URL="LINK_VM_AQUI"
-CLOUDFLARED_URL="LINK_CLOUDFLARED_AQUI"
-PTERODACTYL_URL="LINK_PTERODACTYL_AQUI"
-AIRLINK_URL="LINK_AIRLINK_AQUI"
-PTERODACTYL_UPDATER_URL="LINK_PTERODACTYL_UPDATER_AQUI"
-WINGS_URL="LINK_WINGS_AQUI"
-BLUEPRINT_URL="LINK_BLUEPRINT_AQUI"
+VM_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/vm1bet.sh"
+CLOUDFLARED_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/cloudflare.sh"
+PTERODACTYL_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/pterocly.sh"
+AIRLINK_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/airlink.sh"
+PTERODACTYL_UPDATER_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/updater.sh"
+WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/wings.sh"
+BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
 
 # Função para baixar e executar um script remoto
 run_remote_script() {
