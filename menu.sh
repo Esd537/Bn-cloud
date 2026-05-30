@@ -36,24 +36,19 @@ loading_bar() {
     echo -e "${B_CYAN}╚══════════════════════════════════════════╝${NC}"
     echo -ne "${B_CYAN}[${NC}"
 
-    for i in {1..50}; do
-        echo -ne "${B_CYAN}█${NC}"
+    # Barra de progresso com degradê (30 blocos, ~1.5s total)
+    for i in {1..30}; do
+        # Alterna entre verde claro e verde escuro para simular degradê
+        if [ $((i % 2)) -eq 0 ]; then
+            echo -ne "${B_GREEN}█${NC}"
+        else
+            echo -ne "${B_CYAN}█${NC}"
+        fi
         sleep 0.05
     done
     echo -e "${B_CYAN}]${NC}"
-
-    for i in {1..6}; do
-        printf "\r${B_YELLOW}  Carregando   ${NC}"
-        sleep 0.2
-        printf "\r${B_YELLOW}  Carregando.  ${NC}"
-        sleep 0.2
-        printf "\r${B_YELLOW}  Carregando.. ${NC}"
-        sleep 0.2
-        printf "\r${B_YELLOW}  Carregando...${NC}"
-        sleep 0.2
-    done
-    printf "\r${B_GREEN}  Pronto!                    ${NC}\n"
-    sleep 0.5
+    echo -e "${B_GREEN}  Pronto!${NC}"
+    sleep 0.3
 }
 
 # ===============================
@@ -113,18 +108,19 @@ loading_bar
 while true; do
     banner
     echo -e "${B_CYAN}────────────── MENU PRINCIPAL ──────────────${NC}"
-    printf "${B_CYAN} 1)${B_WHITE} %-35s${NC}\n" "Gerenciador de VMs"
-    printf "${B_CYAN} 2)${B_WHITE} %-35s${NC}\n" "Cloudflare Tunnel"
-    printf "${B_CYAN} 3)${B_WHITE} %-35s${NC}\n" "Pterodactyl Panel (Instalador)"
-    printf "${B_CYAN} 4)${B_WHITE} %-35s${NC}\n" "Airlink Panel"
-    printf "${B_CYAN} 5)${B_WHITE} %-35s${NC}\n" "Pterodactyl Updater"
-    printf "${B_CYAN} 6)${B_WHITE} %-35s${NC}\n" "Wings Installer"
-    printf "${B_CYAN} 7)${B_WHITE} %-35s${NC}\n" "Blueprint Installer"
-    printf "${B_CYAN} 8)${B_WHITE} %-35s${NC}\n" "Instalar Dependências"
+    # Opções: número em verde, texto em branco, alinhamento correto
+    printf "${B_GREEN} 1)${B_WHITE} %-35s${NC}\n" "Gerenciador de VMs"
+    printf "${B_GREEN} 2)${B_WHITE} %-35s${NC}\n" "Cloudflare Tunnel"
+    printf "${B_GREEN} 3)${B_WHITE} %-35s${NC}\n" "Pterodactyl Panel (Instalador)"
+    printf "${B_GREEN} 4)${B_WHITE} %-35s${NC}\n" "Airlink Panel"
+    printf "${B_GREEN} 5)${B_WHITE} %-35s${NC}\n" "Pterodactyl Updater"
+    printf "${B_GREEN} 6)${B_WHITE} %-35s${NC}\n" "Wings Installer"
+    printf "${B_GREEN} 7)${B_WHITE} %-35s${NC}\n" "Blueprint Installer"
+    printf "${B_GREEN} 8)${B_WHITE} %-35s${NC}\n" "Instalar Dependências"
     echo ""
     printf "${B_RED} 0)${B_WHITE} %-35s${NC}\n" "Sair"
     echo -e "${B_CYAN}────────────────────────────────────────────${NC}"
-    echo -ne "${B_WHITE}Escolha uma opção: ${NC}"
+    echo -ne "${B_CYAN}➤ ${B_WHITE}Escolha uma opção: ${NC}"
     read -r opcao
 
     if ! [[ "$opcao" =~ ^[0-8]$ ]]; then
