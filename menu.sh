@@ -67,7 +67,7 @@ banner() {
   |____/|_| \_|  \____|_|\___/ \__,_|\__,_|
 EOF
     echo -e "║                                          ║"
-    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_CYAN}         ║"
+    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_CYAN} ║"       
     echo -e "╚══════════════════════════════════════════╝${NC}"
     echo ""
 }
