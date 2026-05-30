@@ -137,7 +137,7 @@ while true; do
         5) run_remote_script "$PTERODACTYL_UPDATER_URL" "Pterodactyl Updater" ;;
         6) run_remote_script "$WINGS_URL" "Wings Installer" ;;
         7) run_remote_script "$BLUEPRINT_URL" "Blueprint Installer" ;;
-        8) run_remote_script "$DEPS_URL" "Instalar Dependências" ;;
+        8) run_remote_script "$SETUP_URL" "Instalar Dependências" ;;
         0)
             clear
             echo -e "${B_GREEN}Obrigado por usar BN Cloud!${NC}"
