@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 # ===========================================================
-#   BN CLOUD - INSTALADOR DE DEPENDÊNCIAS (MULTI-AMBIENTE)
+#   BN CLOUD - INSTALADOR DE DEPENDÊNCIAS (NIX + APT)
 #   Feito por BN | Discord: eabn8
 # ===========================================================
 set -euo pipefail
 
+# Cores
 VERDE='\033[1;32m'
 AMARELO='\033[1;33m'
 CIANO='\033[1;36m'
 AZUL='\033[1;34m'
+VERMELHO='\033[1;31m'
 NC='\033[0m'
 
+# Banner
 clear
 echo -e "${AZUL}"
 cat <<'EOF'
@@ -23,17 +26,12 @@ EOF
 echo -e "${NC}"
 echo -e "${AMARELO}=========== Instalador de Dependências ===========${NC}\n"
 
-# --- Detecção do ambiente ---
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS=$ID
-else
-    OS="unknown"
-fi
-
-# --- Ambiente Nix / IDX ---
-if command -v nix-env >/dev/null 2>&1 || [ -d /home/user/.idx ]; then
-    echo -e "${CIANO}Ambiente Nix/IDX detectado. Criando .idx/dev.nix...${NC}"
+# Detecta ambiente
+if command -v nix-shell &>/dev/null || [ -d /home/user/.idx ] || [ -d /home/idx ]; then
+    # -------------------------------
+    # AMBIENTE NIX / GOOGLE IDX
+    # -------------------------------
+    echo -e "${CIANO}🔧 Ambiente Nix/IDX detectado. Criando .idx/dev.nix...${NC}"
     mkdir -p .idx
     cat > .idx/dev.nix <<'NIX'
 { pkgs, ... }: {
@@ -71,41 +69,31 @@ if command -v nix-env >/dev/null 2>&1 || [ -d /home/user/.idx ]; then
   };
 }
 NIX
-    echo -e "${VERDE}✅ Arquivo .idx/dev.nix criado.${NC}"
-    echo -e "${YELLOW}Recarregue o ambiente IDX para aplicar os pacotes.${NC}"
-    exit 0
+
+    echo -e "${VERDE}✅ Arquivo .idx/dev.nix criado com sucesso!${NC}"
+    echo -e "${AMARELO}ℹ️  Recarregue o ambiente do IDX para aplicar os pacotes.${NC}"
+
+else
+    # -------------------------------
+    # AMBIENTE LINUX TRADICIONAL (APT)
+    # -------------------------------
+    echo -e "${CIANO}🔧 Instalando dependências via APT...${NC}"
+
+    if [ "$(id -u)" -ne 0 ]; then
+        echo -e "${VERMELHO}❌ Este script precisa ser executado como root ou com sudo.${NC}"
+        exit 1
+    fi
+
+    apt-get update -y
+    apt-get install -y \
+        qemu-kvm libvirt-daemon-system libvirt-clients virt-manager \
+        cloud-init genisoimage \
+        curl wget git unzip \
+        openssl
+
+    systemctl enable --now libvirtd 2>/dev/null || systemctl enable --now libvirt-daemon 2>/dev/null || true
+
+    echo -e "${VERDE}✅ Pacotes instalados com sucesso!${NC}"
 fi
 
-# --- Ubuntu / Debian ---
-if [[ "$OS" == "ubuntu" || "$OS" == "debian" ]]; then
-    echo -e "${CIANO}Sistema Ubuntu/Debian detectado. Usando apt...${NC}"
-    sudo apt-get update -y
-    sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients virt-manager cloud-init genisoimage curl wget git unzip openssl
-    sudo systemctl enable --now libvirtd || sudo systemctl enable --now libvirt-daemon || true
-    echo -e "\n${VERDE}✅ Instalação concluída!${NC}"
-    exit 0
-fi
-
-# --- Fedora / RHEL ---
-if [[ "$OS" == "fedora" || "$OS" == "centos" || "$OS" == "rhel" ]]; then
-    echo -e "${CIANO}Sistema Fedora/RHEL detectado. Usando dnf...${NC}"
-    sudo dnf install -y qemu-kvm libvirt virt-manager cloud-init genisoimage curl wget git unzip openssl
-    sudo systemctl enable --now libvirtd || true
-    echo -e "\n${VERDE}✅ Instalação concluída!${NC}"
-    exit 0
-fi
-
-# --- Alpine ---
-if [[ "$OS" == "alpine" ]]; then
-    echo -e "${CIANO}Sistema Alpine detectado. Usando apk...${NC}"
-    sudo apk add qemu-system-x86_64 qemu-img qemu-system-arm libvirt-daemon qemu-kvm libvirt-client virt-manager cloud-init cdrkit curl wget git unzip openssl
-    sudo rc-update add libvirtd
-    sudo rc-service libvirtd start
-    echo -e "\n${VERDE}✅ Instalação concluída!${NC}"
-    exit 0
-fi
-
-# --- Sistema desconhecido ---
-echo -e "${AMARELO}Sistema não identificado automaticamente.${NC}"
-echo -e "${YELLOW}Tente instalar manualmente os pacotes necessários.${NC}"
-exit 1
+echo -e "${AMARELO}🎉 Agora você pode continuar usando o menu principal.${NC}"
