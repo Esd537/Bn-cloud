@@ -23,7 +23,7 @@ WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/win
 BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
 DEPS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/deps.sh"
 
-# --- Garante que o teclado funcione (sem interferência do pipe) ---
+# --- Garante que o teclado funcione ---
 exec < /dev/tty
 
 # ===============================
@@ -31,19 +31,17 @@ exec < /dev/tty
 # ===============================
 loading_bar() {
     clear
-    echo -e "${B_GREEN}╔══════════════════════════════════════════╗${NC}"
-    echo -e "${B_GREEN}║${B_WHITE}         🌐 BN CLOUD INICIALIZANDO         ${B_GREEN}║${NC}"
-    echo -e "${B_GREEN}╚══════════════════════════════════════════╝${NC}"
-    echo -ne "${B_GREEN}[${NC}"
+    echo -e "${B_CYAN}╔══════════════════════════════════════════╗${NC}"
+    echo -e "${B_CYAN}║${B_WHITE}         🌐 BN CLOUD INICIALIZANDO         ${B_CYAN}║${NC}"
+    echo -e "${B_CYAN}╚══════════════════════════════════════════╝${NC}"
+    echo -ne "${B_CYAN}[${NC}"
 
-    # Barra de progresso de 50 blocos (~2,5 segundos)
     for i in {1..50}; do
-        echo -ne "${B_GREEN}█${NC}"
+        echo -ne "${B_CYAN}█${NC}"
         sleep 0.05
     done
-    echo -e "${B_GREEN}]${NC}"
+    echo -e "${B_CYAN}]${NC}"
 
-    # Simula um "Carregando..." piscando
     for i in {1..6}; do
         printf "\r${B_YELLOW}  Carregando   ${NC}"
         sleep 0.2
@@ -63,7 +61,7 @@ loading_bar() {
 # ===============================
 banner() {
     clear
-    echo -e "${B_GREEN}"
+    echo -e "${B_CYAN}"
     echo "╔══════════════════════════════════════════╗"
     echo "║                                          ║"
     cat <<'EOF'
@@ -74,20 +72,20 @@ banner() {
   |____/|_| \_|  \____|_|\___/ \__,_|\__,_|
 EOF
     echo -e "║                                          ║"
-    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_GREEN}     ║"
+    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_CYAN}     ║"
     echo -e "╚══════════════════════════════════════════╝${NC}"
     echo ""
 }
 
 # ===============================
-#   FUNÇÃO AUXILIAR DE EXECUÇÃO
+#   EXECUÇÃO DE SCRIPTS REMOTOS
 # ===============================
 run_remote_script() {
     local url="$1"
     local nome="$2"
     local tmpfile="/tmp/bncloud_$RANDOM.sh"
 
-    echo -e "${B_CYAN}🔗 Baixando $nome...${NC}"
+    echo -e "${B_GREEN}🔗 Baixando $nome...${NC}"
     if ! curl -sSL "$url" -o "$tmpfile"; then
         echo -e "${B_RED}❌ Falha ao baixar $nome${NC}"
         rm -f "$tmpfile"
@@ -110,27 +108,25 @@ run_remote_script() {
 #   MENU PRINCIPAL
 # ===============================
 
-# Mostra animação apenas uma vez
 loading_bar
 
 while true; do
     banner
-    echo -e "${B_GREEN}────────────── MENU PRINCIPAL ──────────────${NC}"
-    printf "${B_GREEN} 1)${B_WHITE} %-35s${NC}\n" "Gerenciador de VMs"
-    printf "${B_GREEN} 2)${B_WHITE} %-35s${NC}\n" "Cloudflare Tunnel"
-    printf "${B_GREEN} 3)${B_WHITE} %-35s${NC}\n" "Pterodactyl Panel (Instalador)"
-    printf "${B_GREEN} 4)${B_WHITE} %-35s${NC}\n" "Airlink Panel"
-    printf "${B_GREEN} 5)${B_WHITE} %-35s${NC}\n" "Pterodactyl Updater"
-    printf "${B_GREEN} 6)${B_WHITE} %-35s${NC}\n" "Wings Installer"
-    printf "${B_GREEN} 7)${B_WHITE} %-35s${NC}\n" "Blueprint Installer"
-    printf "${B_GREEN} 8)${B_WHITE} %-35s${NC}\n" "Instalar Dependências"
+    echo -e "${B_CYAN}────────────── MENU PRINCIPAL ──────────────${NC}"
+    printf "${B_CYAN} 1)${B_WHITE} %-35s${NC}\n" "Gerenciador de VMs"
+    printf "${B_CYAN} 2)${B_WHITE} %-35s${NC}\n" "Cloudflare Tunnel"
+    printf "${B_CYAN} 3)${B_WHITE} %-35s${NC}\n" "Pterodactyl Panel (Instalador)"
+    printf "${B_CYAN} 4)${B_WHITE} %-35s${NC}\n" "Airlink Panel"
+    printf "${B_CYAN} 5)${B_WHITE} %-35s${NC}\n" "Pterodactyl Updater"
+    printf "${B_CYAN} 6)${B_WHITE} %-35s${NC}\n" "Wings Installer"
+    printf "${B_CYAN} 7)${B_WHITE} %-35s${NC}\n" "Blueprint Installer"
+    printf "${B_CYAN} 8)${B_WHITE} %-35s${NC}\n" "Instalar Dependências"
     echo ""
     printf "${B_RED} 0)${B_WHITE} %-35s${NC}\n" "Sair"
-    echo -e "${B_GREEN}────────────────────────────────────────────${NC}"
-    echo -ne "${B_CYAN}Escolha uma opção: ${NC}"
+    echo -e "${B_CYAN}────────────────────────────────────────────${NC}"
+    echo -ne "${B_WHITE}Escolha uma opção: ${NC}"
     read -r opcao
 
-    # Validação: aceita apenas números de 0 a 8
     if ! [[ "$opcao" =~ ^[0-8]$ ]]; then
         echo -e "${B_RED}❌ Opção inválida!${NC}"
         sleep 1
