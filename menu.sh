@@ -11,7 +11,7 @@ B_GREEN='\033[1;32m'
 B_YELLOW='\033[1;33m'
 B_CYAN='\033[1;36m'
 B_WHITE='\033[1;37m'
-NC='\033[0m'   # Sem cor (fundo padrão escuro)
+NC='\033[0m'
 
 # --- Links dos scripts ---
 VM_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/vm1bet.sh"
@@ -23,7 +23,7 @@ WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/win
 BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
 DEPS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/deps.sh"
 
-# --- Força leitura do teclado (evita interferência do pipe) ---
+# --- Garante que o teclado funcione (sem interferência do pipe) ---
 exec < /dev/tty
 
 # ===============================
@@ -31,19 +31,31 @@ exec < /dev/tty
 # ===============================
 loading_bar() {
     clear
-    echo -e "${B_GREEN}"
-    echo "╔══════════════════════════════════════════╗"
-    echo "║         🌐 BN CLOUD INICIALIZANDO        ║"
-    echo "╚══════════════════════════════════════════╝"
+    echo -e "${B_GREEN}╔══════════════════════════════════════════╗${NC}"
+    echo -e "${B_GREEN}║${B_WHITE}         🌐 BN CLOUD INICIALIZANDO         ${B_GREEN}║${NC}"
+    echo -e "${B_GREEN}╚══════════════════════════════════════════╝${NC}"
     echo -ne "${B_GREEN}[${NC}"
-    for i in {1..40}; do
+
+    # Barra de progresso de 50 blocos (~2,5 segundos)
+    for i in {1..50}; do
         echo -ne "${B_GREEN}█${NC}"
-        sleep 0.03
+        sleep 0.05
     done
     echo -e "${B_GREEN}]${NC}"
+
+    # Simula um "Carregando..." piscando
+    for i in {1..6}; do
+        printf "\r${B_YELLOW}  Carregando   ${NC}"
+        sleep 0.2
+        printf "\r${B_YELLOW}  Carregando.  ${NC}"
+        sleep 0.2
+        printf "\r${B_YELLOW}  Carregando.. ${NC}"
+        sleep 0.2
+        printf "\r${B_YELLOW}  Carregando...${NC}"
+        sleep 0.2
+    done
+    printf "\r${B_GREEN}  Pronto!                    ${NC}\n"
     sleep 0.5
-    echo -e "${B_WHITE} Sistema pronto!${NC}"
-    sleep 1
 }
 
 # ===============================
@@ -118,7 +130,7 @@ while true; do
     echo -ne "${B_CYAN}Escolha uma opção: ${NC}"
     read -r opcao
 
-    # Validação: só números de 0 a 8
+    # Validação: aceita apenas números de 0 a 8
     if ! [[ "$opcao" =~ ^[0-8]$ ]]; then
         echo -e "${B_RED}❌ Opção inválida!${NC}"
         sleep 1
