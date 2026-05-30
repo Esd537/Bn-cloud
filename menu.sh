@@ -21,7 +21,7 @@ AIRLINK_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/a
 PTERODACTYL_UPDATER_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/updater.sh"
 WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/wings.sh"
 BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
-SETUP_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/setup.sh"
+SETUP_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/main/setup.sh"
 
 # --- Garante que o teclado funcione ---
 exec < /dev/tty
