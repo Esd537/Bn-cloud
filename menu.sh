@@ -22,7 +22,7 @@ PTERODACTYL_UPDATER_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/
 WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/wings.sh"
 BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
 SETUP_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/main/setup.sh"
-ATIVIDADE_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/24h.sh"
+ATIVIDADE_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/main/24h.sh"
 
 # --- Teclado ---
 exec < /dev/tty
