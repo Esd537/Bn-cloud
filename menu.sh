@@ -22,23 +22,19 @@ PTERODACTYL_UPDATER_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/
 WINGS_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/wings.sh"
 BLUEPRINT_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/blueprint.sh"
 SETUP_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/main/setup.sh"
+ATIVIDADE_URL="https://raw.githubusercontent.com/Esd537/Bn-cloud/refs/heads/main/24hrs.sh"
 
-# --- Garante que o teclado funcione ---
+# --- Teclado ---
 exec < /dev/tty
 
-# ===============================
-#   ANIMAÇÃO DE CARREGAMENTO
-# ===============================
+# --- Animação ---
 loading_bar() {
     clear
     echo -e "${B_CYAN}╔══════════════════════════════════════════╗${NC}"
     echo -e "${B_CYAN}║${B_WHITE}         🌐 BN CLOUD INICIALIZANDO         ${B_CYAN}║${NC}"
     echo -e "${B_CYAN}╚══════════════════════════════════════════╝${NC}"
     echo -ne "${B_CYAN}[${NC}"
-
-    # Barra de progresso com degradê (30 blocos, ~1.5s total)
     for i in {1..30}; do
-        # Alterna entre verde claro e verde escuro para simular degradê
         if [ $((i % 2)) -eq 0 ]; then
             echo -ne "${B_GREEN}█${NC}"
         else
@@ -51,9 +47,7 @@ loading_bar() {
     sleep 0.3
 }
 
-# ===============================
-#   BANNER PRINCIPAL
-# ===============================
+# --- Banner ---
 banner() {
     clear
     echo -e "${B_CYAN}"
@@ -67,14 +61,12 @@ banner() {
   |____/|_| \_|  \____|_|\___/ \__,_|\__,_|
 EOF
     echo -e "║                                          ║"
-    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_CYAN} ║"       
+    echo -e "║      ${B_WHITE}FEITO POR BN | DISCORD: eabn8${B_CYAN} ║"
     echo -e "╚══════════════════════════════════════════╝${NC}"
     echo ""
 }
 
-# ===============================
-#   EXECUÇÃO DE SCRIPTS REMOTOS
-# ===============================
+# --- Execução ---
 run_remote_script() {
     local url="$1"
     local nome="$2"
@@ -99,16 +91,12 @@ run_remote_script() {
     read -rp "$(echo -e "${B_YELLOW}⏎ Pressione Enter para voltar ao menu...${NC}")"
 }
 
-# ===============================
-#   MENU PRINCIPAL
-# ===============================
-
+# --- Menu ---
 loading_bar
 
 while true; do
     banner
     echo -e "${B_CYAN}────────────── MENU PRINCIPAL ──────────────${NC}"
-    # Opções: número em verde, texto em branco, alinhamento correto
     printf "${B_GREEN} 1)${B_WHITE} %-35s${NC}\n" "Gerenciador de VMs"
     printf "${B_GREEN} 2)${B_WHITE} %-35s${NC}\n" "Cloudflare Tunnel"
     printf "${B_GREEN} 3)${B_WHITE} %-35s${NC}\n" "Pterodactyl Panel (Instalador)"
@@ -117,13 +105,14 @@ while true; do
     printf "${B_GREEN} 6)${B_WHITE} %-35s${NC}\n" "Wings Installer"
     printf "${B_GREEN} 7)${B_WHITE} %-35s${NC}\n" "Blueprint Installer"
     printf "${B_GREEN} 8)${B_WHITE} %-35s${NC}\n" "Instalar Dependências"
+    printf "${B_GREEN} 9)${B_WHITE} %-35s${NC}\n" "Ativar Sistema 24/7"
     echo ""
     printf "${B_RED} 0)${B_WHITE} %-35s${NC}\n" "Sair"
     echo -e "${B_CYAN}────────────────────────────────────────────${NC}"
     echo -ne "${B_CYAN}➤ ${B_WHITE}Escolha uma opção: ${NC}"
     read -r opcao
 
-    if ! [[ "$opcao" =~ ^[0-8]$ ]]; then
+    if ! [[ "$opcao" =~ ^[0-9]$ ]]; then
         echo -e "${B_RED}❌ Opção inválida!${NC}"
         sleep 1
         continue
@@ -138,6 +127,7 @@ while true; do
         6) run_remote_script "$WINGS_URL" "Wings Installer" ;;
         7) run_remote_script "$BLUEPRINT_URL" "Blueprint Installer" ;;
         8) run_remote_script "$SETUP_URL" "Instalar Dependências" ;;
+        9) run_remote_script "$ATIVIDADE_URL" "Sistema 24/7" ;;
         0)
             clear
             echo -e "${B_GREEN}Obrigado por usar BN Cloud!${NC}"
